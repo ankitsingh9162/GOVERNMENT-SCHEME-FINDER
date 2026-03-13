@@ -13,11 +13,11 @@ const schemeSchema = new mongoose.Schema(
     },
     benefits: {
       type: String,
-      required: true,
+      required: [true, 'Benefits are required'],
     },
     category: {
       type: String,
-      required: true,
+      required: [true, 'Category is required'],
       enum: [
         'Health',
         'Education',
@@ -28,46 +28,50 @@ const schemeSchema = new mongoose.Schema(
         'Housing',
         'Employment',
         'Financial Assistance',
-        'Other',
+        'Agriculture',
+        'Disability',
+        'Minority Welfare',
+        'Youth Development',
       ],
     },
     schemeType: {
       type: String,
+      required: [true, 'Scheme type is required'],
       enum: ['Central', 'State'],
-      default: 'Central',
     },
-    state: {
-      type: String,
-      // Only required if schemeType is 'State'
-    },
-    // Eligibility Criteria
     eligibility: {
       minAge: {
         type: Number,
         min: 0,
+        max: 150,
       },
       maxAge: {
         type: Number,
+        min: 0,
         max: 150,
       },
       minIncome: {
         type: Number,
+        min: 0,
       },
       maxIncome: {
         type: Number,
+        min: 0,
       },
-      states: {
-        type: [String],
-        // Array of state names
-      },
-      categories: {
-        type: [String],
-        // e.g., ['General', 'OBC', 'SC', 'ST']
-      },
+      states: [
+        {
+          type: String,
+        },
+      ],
+      categories: [
+        {
+          type: String,
+          enum: ['General', 'OBC', 'SC', 'ST', 'EWS'],
+        },
+      ],
       gender: {
         type: String,
-        enum: ['Male', 'Female', 'Other', 'All'],
-        default: 'All',
+        enum: ['Male', 'Female', 'Other'],
       },
       requiresDisability: {
         type: Boolean,
@@ -77,21 +81,19 @@ const schemeSchema = new mongoose.Schema(
         type: Boolean,
         default: false,
       },
-      occupations: {
-        type: [String],
-        // e.g., ['Farmer', 'Student', 'Unemployed']
+      occupations: [
+        {
+          type: String,
+        },
+      ],
+    },
+    documents: [
+      {
+        type: String,
       },
-    },
-    // Documents Required
-    documents: {
-      type: [String],
-      default: [],
-      // e.g., ['Aadhaar Card', 'Income Certificate', 'Bank Passbook']
-    },
-    // Application Details
+    ],
     applicationLink: {
       type: String,
-      trim: true,
     },
     lastDate: {
       type: Date,
@@ -102,7 +104,6 @@ const schemeSchema = new mongoose.Schema(
     },
     officialWebsite: {
       type: String,
-      trim: true,
     },
   },
   {
@@ -110,7 +111,6 @@ const schemeSchema = new mongoose.Schema(
   }
 );
 
-// Index for faster searches
-schemeSchema.index({ category: 1, schemeType: 1, isActive: 1 });
+const Scheme = mongoose.model('Scheme', schemeSchema);
 
-module.exports = mongoose.model('Scheme', schemeSchema);
+module.exports = Scheme;

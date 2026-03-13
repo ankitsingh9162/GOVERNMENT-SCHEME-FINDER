@@ -20,7 +20,11 @@ const userSchema = new mongoose.Schema(
       required: [true, 'Password is required'],
       minlength: 6,
     },
-    // Profile Information
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true,
+    },
     age: {
       type: Number,
       min: 0,
@@ -32,11 +36,9 @@ const userSchema = new mongoose.Schema(
     },
     state: {
       type: String,
-      trim: true,
     },
     district: {
       type: String,
-      trim: true,
     },
     category: {
       type: String,
@@ -44,7 +46,6 @@ const userSchema = new mongoose.Schema(
     },
     occupation: {
       type: String,
-      trim: true,
     },
     disability: {
       type: Boolean,
@@ -58,7 +59,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ['Male', 'Female', 'Other'],
     },
-    // Saved Schemes
     savedSchemes: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -76,13 +76,21 @@ userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     next();
   }
+
+  // Skip hashing if it's a Google user with random password
+  if (this.googleId && !this.isModified('password')) {
+    next();
+  }
+
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-// Method to compare passwords
-userSchema.methods.comparePassword = async function (enteredPassword) {
+// Compare password method
+userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;

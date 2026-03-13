@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { mockSchemes } from '../../utils/mockData';
+import { mockSchemes } from "../utils/mockData";
 import SchemeCard from '../../components/scheme/SchemeCard';
 import { TrendingUp, Bookmark, User } from 'lucide-react';
 

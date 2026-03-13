@@ -1,22 +1,19 @@
 const express = require('express');
+const router = express.Router();
 const {
   getAllSchemes,
-  getSchemeById,
+  getSchemeById, // Add this
   getEligibleSchemes,
   compareSchemes,
-  createScheme,
 } = require('../controllers/schemeController');
 const { protect } = require('../middleware/authMiddleware');
 
-const router = express.Router();
-
 // Public routes
 router.get('/', getAllSchemes);
-router.get('/:id', getSchemeById);
-router.post('/compare', compareSchemes);
+router.get('/:id', getSchemeById); // Add this
 
-// Protected routes (require login)
+// Protected routes
 router.get('/user/eligible', protect, getEligibleSchemes);
-router.post('/create', protect, createScheme);
+router.post('/compare', protect, compareSchemes);
 
 module.exports = router;
