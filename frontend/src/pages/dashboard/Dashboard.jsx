@@ -22,7 +22,7 @@ const Dashboard = () => {
         const response = await schemeAPI.getEligibleSchemes();
         setEligibleSchemes(response.data.data);
       } catch (err) {
-        console.error('Error fetching eligible schemes:', err);
+        console.error('Error:', err);
         setError('Failed to load eligible schemes');
       } finally {
         setLoading(false);
