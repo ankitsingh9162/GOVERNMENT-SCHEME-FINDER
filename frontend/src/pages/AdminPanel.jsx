@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 
 const AdminPanel = () => {
   const [syncing, setSyncing] = useState(false);
@@ -10,16 +10,7 @@ const AdminPanel = () => {
     setResult(null);
     
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(
-        'http://localhost:5000/api/admin/sync-schemes',
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await api.post('/admin/sync-schemes', {});
       
       setResult(response.data);
       alert(`✅ Sync successful!\nAdded: ${response.data.stats.added}\nUpdated: ${response.data.stats.updated}`);

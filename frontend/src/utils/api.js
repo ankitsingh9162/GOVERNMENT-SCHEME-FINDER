@@ -1,7 +1,10 @@
 import axios from 'axios';
 
-// HARDCODED BACKEND URL
-const API_URL = 'https://govt-scheme-finder-backend.onrender.com/api';
+// Use environment variable if available, otherwise fallback to localhost
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+const BASE_URL = API_URL.replace('/api', '');
+
+console.log('🔗 API URL:', API_URL);
 
 const api = axios.create({
   baseURL: API_URL,
@@ -10,7 +13,6 @@ const api = axios.create({
   },
 });
 
-// JWT token interceptor
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -24,16 +26,15 @@ api.interceptors.request.use(
   }
 );
 
-// Auth API
 export const authAPI = {
   register: (userData) => api.post('/auth/register', userData),
   login: (credentials) => api.post('/auth/login', credentials),
   googleAuth: () => {
+    // Redirect to backend Google Auth route
     window.location.href = `${API_URL}/auth/google`;
   },
 };
 
-// Scheme API
 export const schemeAPI = {
   getAllSchemes: (params) => api.get('/schemes', { params }),
   getSchemeById: (id) => api.get(`/schemes/${id}`),
@@ -42,7 +43,6 @@ export const schemeAPI = {
     api.post('/schemes/compare', { schemeId1, schemeId2 }),
 };
 
-// User API
 export const userAPI = {
   getProfile: () => api.get('/user/profile'),
   updateProfile: (data) => api.put('/user/profile', data),

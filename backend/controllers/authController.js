@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 // Generate JWT Token
 const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
+  return jwt.sign({ id }, process.env.JWT_SECRET || 'fallback_secret', {
     expiresIn: '30d',
   });
 };
@@ -63,7 +63,7 @@ const loginUser = async (req, res) => {
     // Check for user
     const user = await User.findOne({ email });
 
-    if (user && (await user.comparePassword(password))) {
+    if (user && (await user.matchPassword(password))) {
       res.json({
         _id: user._id,
         name: user.name,
