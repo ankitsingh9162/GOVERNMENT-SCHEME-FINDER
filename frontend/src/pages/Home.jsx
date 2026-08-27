@@ -137,22 +137,22 @@ const Home = () => {
             {/* Content */}
             <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
               <div className="text-white max-w-2xl">
-                <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in-up">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in-up">
                   {slide.title}
                 </h1>
                 <p className="text-xl md:text-2xl mb-8 text-gray-100 animate-fade-in-up animation-delay-200">
                   {slide.subtitle}
                 </p>
-                <div className="flex flex-wrap gap-4 animate-fade-in-up animation-delay-400">
+                <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up animation-delay-400">
                   <Link
                     to="/register"
-                    className="px-8 py-4 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100 transition transform hover:scale-105 shadow-lg"
+                    className="px-8 py-4 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100 transition transform hover:scale-105 shadow-lg text-center"
                   >
                     Get Started Free
                   </Link>
                   <Link
                     to="/schemes"
-                    className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition transform hover:scale-105"
+                    className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition transform hover:scale-105 text-center"
                   >
                     Browse Schemes
                   </Link>
@@ -310,7 +310,7 @@ const Home = () => {
 
       {/* Chatbot Window */}
       {chatOpen && (
-        <div className="fixed bottom-24 right-6 w-96 h-[500px] bg-white rounded-2xl shadow-2xl flex flex-col z-50 animate-slide-up">
+        <div className="fixed bottom-24 right-0 sm:right-6 w-full sm:w-96 h-[500px] max-h-[70vh] bg-white rounded-2xl shadow-2xl flex flex-col z-50 animate-slide-up">
           {/* Chat Header */}
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-t-2xl">
             <h3 className="font-bold text-lg">Scheme Assistant</h3>

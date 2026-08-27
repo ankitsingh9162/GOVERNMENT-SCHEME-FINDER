@@ -84,7 +84,7 @@ const Dashboard = () => {
         
         {/* Welcome Section */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center space-x-4">
               <div className="bg-blue-100 p-3 rounded-full">
                 <User className="w-8 h-8 text-blue-600" />
@@ -100,7 +100,7 @@ const Dashboard = () => {
             </div>
             <Link
               to="/profile"
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition w-full sm:w-auto text-center"
             >
               Edit Profile
             </Link>
@@ -206,7 +206,7 @@ const Dashboard = () => {
 
         {/* Eligible Schemes */}
         <div className="bg-white rounded-xl shadow-lg p-6">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-2">
             <h2 className="text-2xl font-bold text-gray-900">
               Your Eligible Schemes
             </h2>
